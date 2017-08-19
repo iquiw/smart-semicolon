@@ -36,7 +36,7 @@
         (insert last-command-event)
         (save-excursion
           (goto-char beg)
-          (delete-backward-char 1))))))
+          (delete-char -1))))))
 
 ;;;###autoload
 (define-minor-mode smart-semicolon-mode
