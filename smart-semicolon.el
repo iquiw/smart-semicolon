@@ -25,7 +25,7 @@
 ;;; Code:
 
 (defun smart-semicolon-post-self-insert-function ()
-  ""
+  "Insert semicolon at appropriate place when it is typed."
   (when (and (eq (char-before) last-command-event)
              (eq last-command-event ?\;))
     (let ((beg (point)))
