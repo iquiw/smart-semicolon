@@ -13,6 +13,9 @@
 
 ;; Ensure that we don't load old byte-compiled versions
 (let ((load-prefer-newer t))
+  (require 'undercover)
+  (undercover "smart-semicolon.el")
+
   (require 'smart-semicolon)
   (require 'espuds)
   (require 'ert))
