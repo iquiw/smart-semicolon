@@ -22,6 +22,7 @@
 
 (Setup
  ;; Before anything has run
+ (setq debug-on-error nil)
  )
 
 (Before
