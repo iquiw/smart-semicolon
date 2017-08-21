@@ -30,3 +30,18 @@ Feature: Insert semicolon smartly
     printf("Hello, world;");
     """
     And the cursor should be at cell (1, 21)
+
+  Scenario: semicolon should be inserted at the current point if smart-semicolon-mode is disabled
+    Given the buffer is empty
+    When I insert:
+    """
+    printf("Hello, world")
+    """
+    And I turn off minor mode smart-semicolon-mode
+    And I go to cell (1, 20)
+    And I type ";"
+    Then I should see:
+    """
+    printf("Hello, world;")
+    """
+    And the cursor should be at cell (1, 21)
