@@ -45,3 +45,23 @@ Feature: Insert semicolon smartly
     printf("Hello, world;")
     """
     And the cursor should be at cell (1, 21)
+
+  Scenario: semicolon should be inserted at the current point if it is nestable comment
+    Given the buffer is empty
+    And I turn on c-mode
+    And I turn on smart-semicolon-mode
+    When I insert:
+    """
+    /* this is a comment */
+
+    // this is also a comment */
+    """
+    And I go to cell (1, 5)
+    And I type ";"
+    Then I should see "th;is"
+    And the cursor should be at cell (1, 6)
+
+    When I go to cell (3, 13)
+    And I type ";"
+    Then I should see "al;so"
+    And the cursor should be at cell (3, 14)

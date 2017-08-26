@@ -41,15 +41,17 @@
   "Insert semicolon at appropriate place when it is typed."
   (when (and (eq (char-before) last-command-event)
              (eq last-command-event ?\;))
-    (let ((beg (point)))
-      (goto-char (line-end-position))
-      (skip-chars-backward "[[:blank:]]")
-      (if (eq (char-before) last-command-event)
-          (goto-char beg)
-        (insert last-command-event)
-        (save-excursion
-          (goto-char beg)
-          (delete-char -1))))))
+    (let ((beg (point))
+          (ppss (syntax-ppss)))
+      (unless (elt ppss 4)
+        (goto-char (line-end-position))
+        (skip-chars-backward "[[:blank:]]")
+        (if (eq (char-before) last-command-event)
+            (goto-char beg)
+          (insert last-command-event)
+          (save-excursion
+            (goto-char beg)
+            (delete-char -1)))))))
 
 ;;;###autoload
 (define-minor-mode smart-semicolon-mode
