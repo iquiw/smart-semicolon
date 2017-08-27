@@ -9,6 +9,11 @@
     (forward-line (- (string-to-number line) 1))
     (move-to-column (string-to-number column))))
 
+(When "^I add \"\\(.\\)\" to trigger characters$"
+  "Add CH to smart-semicolon-trigger-chars."
+  (lambda (ch)
+    (add-to-list 'smart-semicolon-trigger-chars (string-to-char ch))))
+
 (Then "^the cursor should be at cell (\\([0-9]+\\), *\\([0-9]+\\))$"
   "Checks that the cursor is at a specific (LINE, COLUMN)."
   (lambda (line column)

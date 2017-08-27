@@ -65,3 +65,18 @@ Feature: Insert semicolon smartly
     And I type ";"
     Then I should see "al;so"
     And the cursor should be at cell (3, 14)
+
+  Scenario: trigger character can be customized
+    Given the buffer is empty
+    And I add ":" to trigger characters
+    When I insert:
+    """
+    if foo()
+    """
+    And I go to cell (1, 7)
+    And I type ":"
+    Then I should see:
+    """
+    if foo():
+    """
+    And the cursor should be at cell (1, 9)

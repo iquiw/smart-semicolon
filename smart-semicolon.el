@@ -37,10 +37,17 @@
 
 ;;; Code:
 
+(defgroup smart-semicolon nil
+  "Smart Semicolon"
+  :group 'editing)
+
+(defcustom smart-semicolon-trigger-chars '(?\;)
+  "List of characters that trigger smart semicolon behavior.")
+
 (defun smart-semicolon-post-self-insert-function ()
   "Insert semicolon at appropriate place when it is typed."
   (when (and (eq (char-before) last-command-event)
-             (eq last-command-event ?\;))
+             (memq last-command-event smart-semicolon-trigger-chars))
     (let ((beg (point))
           (ppss (syntax-ppss)))
       (unless (elt ppss 4)
@@ -58,8 +65,10 @@
   "Minor mode to insert semicolon smartly."
   :lighter " (;)"
   (if smart-semicolon-mode
-      (add-hook 'post-self-insert-hook #'smart-semicolon-post-self-insert-function nil t)
-    (remove-hook 'post-self-insert-hook #'smart-semicolon-post-self-insert-function t)))
+      (add-hook 'post-self-insert-hook
+                #'smart-semicolon-post-self-insert-function nil t)
+    (remove-hook 'post-self-insert-hook
+                 #'smart-semicolon-post-self-insert-function t)))
 
 (provide 'smart-semicolon)
 ;;; smart-semicolon.el ends here
