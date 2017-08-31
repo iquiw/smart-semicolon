@@ -46,6 +46,13 @@ enable `smart-semicolon`.
 (add-hook 'c-mode-common-hook #'smart-semicolon-mode)
 ```
 
+To enable the same behavior for other character than semicolon, add the
+character into `smart-semicolon-trigger-chars`.
+
+``` emacs-lisp
+(add-to-list 'smart-semicolon-trigger-chars ?:)
+```
+
 License
 -------
 
