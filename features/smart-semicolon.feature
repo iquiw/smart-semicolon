@@ -98,3 +98,22 @@ Feature: Insert semicolon smartly
     """
     And the cursor should be at cell (1, 9)
 
+  Scenario: backspaces after semicolon + other chars should go back to original point with semicolon inserted
+    Given the buffer is empty
+    When I insert:
+    """
+    printf("")
+    """
+    And I go to cell (1, 8)
+    And I start an action chain
+    And I type ";abc"
+    And I press "<backspace>"
+    And I press "<backspace>"
+    And I press "<backspace>"
+    And I press "<backspace>"
+    And I execute the action chain
+    Then I should see:
+    """
+    printf(";")
+    """
+    And the cursor should be at cell (1, 9)

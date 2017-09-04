@@ -52,20 +52,27 @@
 (defvar smart-semicolon--last-command nil)
 
 (defun smart-semicolon-revert-move ()
-  "Revert smart-semicolon behavior by `backward-delete-char'.
-if `backward-delete-char' is called after."
-  (when (and smart-semicolon--last-change
-             (memq this-command smart-semicolon-backspace-commands))
+  "Revert smart-semicolon behavior by backspace command.
+If backspace command is called after smart semicolon insert,
+it reverts smart semicolon behavior, that is, as if semicolon is inserted as is.
+
+This function is to be called as `post-command-hook'.
+
+Backspace command can be configured by `smart-semicolon-backspace-commands'."
+  (cond
+   ((and smart-semicolon--last-change
+         (memq this-command smart-semicolon-backspace-commands))
     (pcase-let ((`(,ch ,origin ,dest) smart-semicolon--last-change))
       (when (eq (point) dest)
         (goto-char origin)
-        (insert ch))))
-  (unless (eq this-command smart-semicolon--last-command)
-    (setq smart-semicolon--last-change nil)))
+        (insert ch)
+        (setq smart-semicolon--last-change nil))))
+   ((not (eq this-command smart-semicolon--last-command))
+    (setq smart-semicolon--last-change nil))))
 
 (defun smart-semicolon-post-self-insert-function ()
   "Insert semicolon at appropriate place when it is typed."
-  (setq smart-semicolon--last-change nil)
+  (setq smart-semicolon--last-command this-command)
   (when (and (eq (char-before) last-command-event)
              (memq last-command-event smart-semicolon-trigger-chars))
     (let ((origin (point))
@@ -82,8 +89,7 @@ if `backward-delete-char' is called after."
             (goto-char origin)
             (delete-char -1))
           (setq smart-semicolon--last-change
-                (list last-command-event (1- origin) dest))
-          (setq smart-semicolon--last-command this-command))))))
+                (list last-command-event (1- origin) dest)))))))
 
 ;;;###autoload
 (define-minor-mode smart-semicolon-mode
