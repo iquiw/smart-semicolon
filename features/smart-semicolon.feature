@@ -66,7 +66,7 @@ Feature: Insert semicolon smartly
     Then I should see "al;so"
     And the cursor should be at cell (3, 14)
 
-  Scenario: trigger character can be customized
+  Scenario: trigger character should be customizable
     Given the buffer is empty
     And I add ":" to trigger characters
     When I insert:
@@ -80,3 +80,21 @@ Feature: Insert semicolon smartly
     if foo():
     """
     And the cursor should be at cell (1, 9)
+
+  Scenario: backspace after semicolon should go back to original point with semicolon inserted
+    Given the buffer is empty
+    When I insert:
+    """
+    printf("")
+    """
+    And I go to cell (1, 8)
+    And I start an action chain
+    And I type ";"
+    And I press "<backspace>"
+    And I execute the action chain
+    Then I should see:
+    """
+    printf(";")
+    """
+    And the cursor should be at cell (1, 9)
+

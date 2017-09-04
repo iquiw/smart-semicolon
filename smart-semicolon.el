@@ -44,31 +44,61 @@
 (defcustom smart-semicolon-trigger-chars '(?\;)
   "List of characters that trigger smart semicolon behavior.")
 
+(defcustom smart-semicolon-backspace-commands
+  '(backward-delete-char delete-backward-char c-electric-backspace)
+  "List of commands that are treated as backspace command.")
+
+(defvar smart-semicolon--last-change nil)
+(defvar smart-semicolon--last-command nil)
+
+(defun smart-semicolon-revert-move ()
+  "Revert smart-semicolon behavior by `backward-delete-char'.
+if `backward-delete-char' is called after."
+  (when (and smart-semicolon--last-change
+             (memq this-command smart-semicolon-backspace-commands))
+    (pcase-let ((`(,ch ,origin ,dest) smart-semicolon--last-change))
+      (when (eq (point) dest)
+        (goto-char origin)
+        (insert ch))))
+  (unless (eq this-command smart-semicolon--last-command)
+    (setq smart-semicolon--last-change nil)))
+
 (defun smart-semicolon-post-self-insert-function ()
   "Insert semicolon at appropriate place when it is typed."
+  (setq smart-semicolon--last-change nil)
   (when (and (eq (char-before) last-command-event)
              (memq last-command-event smart-semicolon-trigger-chars))
-    (let ((beg (point))
-          (ppss (syntax-ppss)))
+    (let ((origin (point))
+          (ppss (syntax-ppss))
+          dest)
       (unless (elt ppss 4)
         (goto-char (line-end-position))
         (skip-chars-backward "[[:blank:]]")
+        (setq dest (1- (point)))
         (if (eq (char-before) last-command-event)
-            (goto-char beg)
+            (goto-char origin)
           (insert last-command-event)
           (save-excursion
-            (goto-char beg)
-            (delete-char -1)))))))
+            (goto-char origin)
+            (delete-char -1))
+          (setq smart-semicolon--last-change
+                (list last-command-event (1- origin) dest))
+          (setq smart-semicolon--last-command this-command))))))
 
 ;;;###autoload
 (define-minor-mode smart-semicolon-mode
   "Minor mode to insert semicolon smartly."
   :lighter " (;)"
   (if smart-semicolon-mode
-      (add-hook 'post-self-insert-hook
-                #'smart-semicolon-post-self-insert-function nil t)
+      (progn
+        (add-hook 'post-self-insert-hook
+                  #'smart-semicolon-post-self-insert-function nil t)
+        (add-hook 'post-command-hook
+                  #'smart-semicolon-revert-move nil t))
     (remove-hook 'post-self-insert-hook
-                 #'smart-semicolon-post-self-insert-function t)))
+                 #'smart-semicolon-post-self-insert-function t)
+    (remove-hook 'post-command-hook
+                 #'smart-semicolon-revert-move t)))
 
 (provide 'smart-semicolon)
 ;;; smart-semicolon.el ends here
