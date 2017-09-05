@@ -15,6 +15,10 @@ semicolon at the end of line if there is no semicolon there.
 If there is semicolon at the end of line, typing <kbd>;</kbd> inserts
 semicolon at the point.
 
+After smart semicolon insert, backspace command reverts the behavior as if
+<kbd>;</kbd> is inserted normally.
+
+
 Setup
 -----
 
@@ -51,6 +55,13 @@ character into `smart-semicolon-trigger-chars`.
 
 ``` emacs-lisp
 (add-to-list 'smart-semicolon-trigger-chars ?:)
+```
+
+To treat some command as backspace command, add the command to
+`smart-semicolon-backspace-commands`.
+
+```
+(add-to-list 'smart-semicolon-backspace-commands 'my-backspace)
 ```
 
 License
