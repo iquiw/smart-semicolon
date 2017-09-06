@@ -4,7 +4,7 @@
 
 ;; Author:    Iku Iwasa <iku.iwasa@gmail.com>
 ;; URL:       https://github.com/iquiw/smart-semicolon
-;; Version:   0.0.0
+;; Version:   0.1.0
 ;; Package-Requires: ((emacs "25"))
 
 ;; This file is free software; you can redistribute it and/or modify
