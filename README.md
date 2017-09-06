@@ -60,7 +60,7 @@ character into `smart-semicolon-trigger-chars`.
 To treat some command as backspace command, add the command to
 `smart-semicolon-backspace-commands`.
 
-```
+``` emacs-lisp
 (add-to-list 'smart-semicolon-backspace-commands 'my-backspace)
 ```
 
