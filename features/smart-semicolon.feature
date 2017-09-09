@@ -17,6 +17,20 @@ Feature: Insert semicolon smartly
     """
     And the cursor should be at cell (1, 23)
 
+  Scenario: semicolon should be inserted at eol after closed square bracket
+    Given the buffer is empty
+    When I insert:
+    """
+    char foo[10]
+    """
+    And I go to cell (1, 0)
+    And I type ";"
+    Then I should see:
+    """
+    char foo[10];
+    """
+    And the cursor should be at cell (1, 13)
+
   Scenario: semicolon should be inserted before trailing spaces
     Given the buffer is empty
     When I insert:

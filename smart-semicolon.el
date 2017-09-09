@@ -80,7 +80,7 @@ Backspace command can be configured by `smart-semicolon-backspace-commands'."
           dest)
       (unless (elt ppss 4)
         (goto-char (line-end-position))
-        (skip-chars-backward "[[:blank:]]")
+        (skip-chars-backward "[:blank:]")
         (setq dest (1- (point)))
         (if (eq (char-before) last-command-event)
             (goto-char origin)
