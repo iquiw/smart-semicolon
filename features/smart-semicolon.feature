@@ -88,6 +88,40 @@ Feature: Insert semicolon smartly
     Then I should see "al;so"
     And the cursor should be at cell (3, 14)
 
+  Scenario: semicolon should be inserted at the current point if in for loop
+    When I insert:
+    """
+    for (int i = 0) {}
+    for(;)
+    """
+    And I go to cell (1, 14)
+    And I type ";"
+    And I go to cell (2, 5)
+    And I type ";"
+    Then I should see:
+    """
+    for (int i = 0;) {}
+    for(;;)
+    """
+    And the cursor should be at cell (2, 6)
+
+  Scenario: semicolon should be inserted at eol if not in for loop
+    When I insert:
+    """
+    fore()
+    for_ ()
+    """
+    And I go to cell (1, 5)
+    And I type ";"
+    And I go to cell (2, 6)
+    And I type ";"
+    Then I should see:
+    """
+    fore();
+    for_ ();
+    """
+    And the cursor should be at cell (2, 8)
+
   Scenario: trigger character should be customizable
     When I add ":" to trigger characters
     And I insert:

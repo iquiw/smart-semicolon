@@ -78,8 +78,9 @@ Backspace command can be configured by `smart-semicolon-backspace-commands'."
     (let ((origin (point))
           (ppss (syntax-ppss))
           dest)
-      (unless (elt ppss 4)
-        (goto-char (line-end-position))
+      (unless (or (elt ppss 4)
+                  (smart-semicolon--for-loop-hack))
+        (end-of-line)
         (skip-chars-backward "[:blank:]")
         (setq dest (1- (point)))
         (if (eq (char-before) last-command-event)
@@ -90,6 +91,12 @@ Backspace command can be configured by `smart-semicolon-backspace-commands'."
             (delete-char -1))
           (setq smart-semicolon--last-change
                 (list last-command-event (1- origin) dest)))))))
+
+(defun smart-semicolon--for-loop-hack ()
+  "Return non-nil if the line is started with keyword \"for\"."
+  (save-excursion
+    (beginning-of-line)
+    (looking-at-p "[[:blank:]]*for\\_>")))
 
 ;;;###autoload
 (define-minor-mode smart-semicolon-mode
