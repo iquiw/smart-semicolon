@@ -29,6 +29,7 @@
  ;; Before each scenario is run
  (switch-to-buffer
   (get-buffer-create "*smart-semicolon*"))
+ (erase-buffer)
  (smart-semicolon-mode 1)
  )
 

@@ -4,7 +4,6 @@ Feature: Insert semicolon smartly
   I want to insert semicolon smartly
 
   Scenario: semicolon should be inserted at eol
-    Given the buffer is empty
     When I insert:
     """
     printf("Hello, world")
@@ -18,7 +17,6 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (1, 23)
 
   Scenario: semicolon should be inserted at eol after closed square bracket
-    Given the buffer is empty
     When I insert:
     """
     char foo[10]
@@ -32,7 +30,6 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (1, 13)
 
   Scenario: semicolon should be inserted before trailing spaces
-    Given the buffer is empty
     When I insert:
     """
     printf("Hello, world")   
@@ -46,7 +43,6 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (1, 23)
 
   Scenario: semicolon should be inserted at the current point if there is already at eol
-    Given the buffer is empty
     When I insert:
     """
     printf("Hello, world");
@@ -60,7 +56,6 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (1, 21)
 
   Scenario: semicolon should be inserted at the current point if smart-semicolon-mode is disabled
-    Given the buffer is empty
     When I insert:
     """
     printf("Hello, world")
@@ -74,11 +69,10 @@ Feature: Insert semicolon smartly
     """
     And the cursor should be at cell (1, 21)
 
-  Scenario: semicolon should be inserted at the current point if it is nestable comment
-    Given the buffer is empty
-    And I turn on c-mode
+  Scenario: semicolon should be inserted at the current point if it is in comment
+    When I turn on c-mode
     And I turn on smart-semicolon-mode
-    When I insert:
+    And I insert:
     """
     /* this is a comment */
 
@@ -95,9 +89,8 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (3, 14)
 
   Scenario: trigger character should be customizable
-    Given the buffer is empty
-    And I add ":" to trigger characters
-    When I insert:
+    When I add ":" to trigger characters
+    And I insert:
     """
     if foo()
     """
@@ -110,7 +103,6 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (1, 9)
 
   Scenario: backspace after semicolon should go back to original point with semicolon inserted
-    Given the buffer is empty
     When I insert:
     """
     printf("")
@@ -127,7 +119,6 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (1, 9)
 
   Scenario: backspaces after semicolon + other chars should go back to original point with semicolon inserted
-    Given the buffer is empty
     When I insert:
     """
     printf("")
