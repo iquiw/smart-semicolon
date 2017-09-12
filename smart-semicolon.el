@@ -95,8 +95,9 @@ Backspace command can be configured by `smart-semicolon-backspace-commands'."
 (defun smart-semicolon--for-loop-hack ()
   "Return non-nil if the line is started with keyword \"for\"."
   (save-excursion
-    (beginning-of-line)
-    (looking-at-p "[[:blank:]]*for\\_>")))
+    (let ((origin (point)))
+      (beginning-of-line)
+      (re-search-forward "\\_<for\\_>" origin t))))
 
 ;;;###autoload
 (define-minor-mode smart-semicolon-mode

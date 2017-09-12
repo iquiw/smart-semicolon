@@ -89,21 +89,25 @@ Feature: Insert semicolon smartly
     And the cursor should be at cell (3, 14)
 
   Scenario: semicolon should be inserted at the current point if in for loop
-    When I insert:
-    """
-    for (int i = 0) {}
-    for(;)
-    """
+    When I insert "for (int i = 0)"
     And I go to cell (1, 14)
     And I type ";"
-    And I go to cell (2, 5)
+    Then I should see "for (int i = 0;)"
+    And the cursor should be at cell (1, 15)
+
+    Given the buffer is empty
+    When I insert "for(;)"
+    And I go to cell (1, 5)
     And I type ";"
-    Then I should see:
-    """
-    for (int i = 0;) {}
-    for(;;)
-    """
-    And the cursor should be at cell (2, 6)
+    Then I should see "for(;;)"
+    And the cursor should be at cell (1, 6)
+
+    Given the buffer is empty
+    When I insert "foo(); for (; *p = 0)"
+    And I go to cell (1, 20)
+    And I type ";"
+    Then I should see "foo(); for (; *p = 0;)"
+    And the cursor should be at cell (1, 21)
 
   Scenario: semicolon should be inserted at eol if not in for loop
     When I insert:
