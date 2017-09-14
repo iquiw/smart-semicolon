@@ -4,7 +4,7 @@
 
 ;; Author:    Iku Iwasa <iku.iwasa@gmail.com>
 ;; URL:       https://github.com/iquiw/smart-semicolon
-;; Version:   0.1.1
+;; Version:   0.1.2
 ;; Package-Requires: ((emacs "25"))
 
 ;; This file is free software; you can redistribute it and/or modify
@@ -24,11 +24,14 @@
 
 ;; This is a minor mode to insert semicolon smartly, like Eclipse does.
 ;;
-;; When `smart-semicolon-mode' is enabled, typing `;' inserts
+;; When `smart-semicolon-mode' is enabled, typing ";" inserts
 ;; semicolon at the end of line if there is no semicolon there.
 ;;
-;; If there is semicolon at the end of line, typing `;' inserts
+;; If there is semicolon at the end of line, typing ";" inserts
 ;; semicolon at the point.
+;;
+;; After smart semicolon insert, backspace command reverts the behavior
+;; as if ";" is inserted normally.
 ;;
 ;; To enable it, add `smart-semicolon-mode' to some major mode hook.
 ;;
