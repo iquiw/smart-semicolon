@@ -48,8 +48,9 @@ Feature: Insert semicolon smartly
     And I insert:
     """
     foo()   // comment
-    bar()   /* comment */
-    baz()   /* 1 */ /* 2 */
+    bar()// comment
+    baz()   /* comment */
+    qux()   /* 1 */ /* 2 */
     """
     And I go to cell (1, 4)
     And I type ";"
@@ -57,13 +58,16 @@ Feature: Insert semicolon smartly
     And I type ";"
     And I go to cell (3, 2)
     And I type ";"
+    And I go to cell (4, 0)
+    And I type ";"
     Then I should see:
     """
     foo();   // comment
-    bar();   /* comment */
-    baz();   /* 1 */ /* 2 */
+    bar();// comment
+    baz();   /* comment */
+    qux();   /* 1 */ /* 2 */
     """
-    And the cursor should be at cell (3, 6)
+    And the cursor should be at cell (4, 6)
 
   Scenario: semicolon should be inserted at the current point if there is already at eol
     When I insert:
