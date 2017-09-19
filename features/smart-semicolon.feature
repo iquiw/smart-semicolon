@@ -180,6 +180,20 @@ Feature: Insert semicolon smartly
     """
     And the cursor should be at cell (1, 9)
 
+  Scenario: block character should be customizable
+    When I add "," to block characters
+    And I insert:
+    """
+    int foo int bar,
+    """
+    And I go to cell (1, 7)
+    And I type ";"
+    Then I should see:
+    """
+    int foo; int bar,
+    """
+    And the cursor should be at cell (1, 8)
+
   Scenario: backspace after semicolon should go back to original point with semicolon inserted
     When I insert:
     """

@@ -14,6 +14,11 @@
   (lambda (ch)
     (add-to-list 'smart-semicolon-trigger-chars (string-to-char ch))))
 
+(When "^I add \"\\(.\\)\" to block characters$"
+  "Add CH to smart-semicolon-block-chars."
+  (lambda (ch)
+    (add-to-list 'smart-semicolon-block-chars (string-to-char ch))))
+
 (Then "^the cursor should be at cell (\\([0-9]+\\), *\\([0-9]+\\))$"
   "Checks that the cursor is at a specific (LINE, COLUMN)."
   (lambda (line column)
