@@ -42,6 +42,29 @@ Feature: Insert semicolon smartly
     """
     And the cursor should be at cell (1, 23)
 
+  Scenario: semicolon should be inserted before comment
+    When I turn on c-mode
+    And I turn on smart-semicolon-mode
+    And I insert:
+    """
+    foo()   // comment
+    bar()   /* comment */
+    baz()   /* 1 */ /* 2 */
+    """
+    And I go to cell (1, 4)
+    And I type ";"
+    And I go to cell (2, 3)
+    And I type ";"
+    And I go to cell (3, 2)
+    And I type ";"
+    Then I should see:
+    """
+    foo();   // comment
+    bar();   /* comment */
+    baz();   /* 1 */ /* 2 */
+    """
+    And the cursor should be at cell (3, 6)
+
   Scenario: semicolon should be inserted at the current point if there is already at eol
     When I insert:
     """
