@@ -50,11 +50,18 @@ enable `smart-semicolon`.
 (add-hook 'c-mode-common-hook #'smart-semicolon-mode)
 ```
 
-To enable the same behavior for other character than semicolon, add the
+To trigger the same behavior by other character than semicolon, add the
 character into `smart-semicolon-trigger-chars`.
 
 ``` emacs-lisp
 (add-to-list 'smart-semicolon-trigger-chars ?:)
+```
+
+To block smart semicolon insert when some character exists at eol, add the
+character into `smart-semicolon-block-chars`.
+
+``` emacs-lisp
+(add-to-list 'smart-semicolon-block-chars ?,)
 ```
 
 To treat some command as backspace command, add the command to
