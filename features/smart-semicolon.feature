@@ -82,6 +82,19 @@ Feature: Insert semicolon smartly
     """
     And the cursor should be at cell (1, 21)
 
+  Scenario: semicolon should be inserted at the current point if there is closed curly bracket at eol
+    When I insert:
+    """
+    if (true) { printf("") }
+    """
+    And I go to cell (1, 22)
+    And I type ";"
+    Then I should see:
+    """
+    if (true) { printf(""); }
+    """
+    And the cursor should be at cell (1, 23)
+
   Scenario: semicolon should be inserted at the current point if smart-semicolon-mode is disabled
     When I insert:
     """

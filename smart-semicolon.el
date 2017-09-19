@@ -47,6 +47,9 @@
 (defcustom smart-semicolon-trigger-chars '(?\;)
   "List of characters that trigger smart semicolon behavior.")
 
+(defcustom smart-semicolon-block-chars '(?\; ?\})
+  "List of characters that block smart semicolon behavior if they are at eol.")
+
 (defcustom smart-semicolon-backspace-commands
   '(backward-delete-char delete-backward-char c-electric-backspace)
   "List of commands that are treated as backspace command.")
@@ -86,7 +89,7 @@ Backspace command can be configured by `smart-semicolon-backspace-commands'."
         (end-of-line)
         (smart-semicolon--skip-comments-and-spaces origin)
         (setq dest (1- (point)))
-        (if (eq (char-before) last-command-event)
+        (if (memq (char-before) smart-semicolon-block-chars)
             (goto-char origin)
           (insert last-command-event)
           (save-excursion
