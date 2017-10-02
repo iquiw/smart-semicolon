@@ -29,6 +29,21 @@ Feature: Insert semicolon smartly
     """
     And the cursor should be at cell (1, 13)
 
+  Scenario: semicolon should be inserted at eol after string
+    When I turn on c-mode
+    And I turn on smart-semicolon-mode
+    And I insert:
+    """
+    return ""
+    """
+    And I go to cell (1, 8)
+    And I type ";"
+    Then I should see:
+    """
+    return "";
+    """
+    And the cursor should be at cell (1, 10)
+
   Scenario: semicolon should be inserted before trailing spaces
     When I insert:
     """

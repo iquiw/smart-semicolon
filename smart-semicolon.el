@@ -110,13 +110,20 @@ Backspace command can be configured by `smart-semicolon-backspace-commands'."
   (let (current prev)
     (while (and (> (setq current (point)) bound)
                 (or (null prev) (/= prev current)))
-      (let ((comment-start (or (nth 8 (syntax-ppss))
-                               (nth 8 (syntax-ppss (1- current))))))
+      (let ((comment-start (or (smart-semicolon--comment-start current)
+                               (smart-semicolon--comment-start (1- current)))))
         (if comment-start
             (goto-char comment-start)
           (goto-char current))
         (skip-chars-backward "[:blank:]"))
       (setq prev current))))
+
+(defun smart-semicolon--comment-start (point)
+  "Return position of comment start if POINT is in comment.
+Otherwise, return nil."
+  (let ((ppss (syntax-ppss point)))
+    (and (nth 4 ppss)
+         (nth 8 ppss))))
 
 ;;;###autoload
 (define-minor-mode smart-semicolon-mode
