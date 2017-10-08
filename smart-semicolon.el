@@ -45,14 +45,17 @@
   :group 'editing)
 
 (defcustom smart-semicolon-trigger-chars '(?\;)
-  "List of characters that trigger smart semicolon behavior.")
+  "List of characters that trigger smart semicolon behavior."
+  :type '(repeat character))
 
 (defcustom smart-semicolon-block-chars '(?\; ?\})
-  "List of characters that block smart semicolon behavior if they are at eol.")
+  "List of characters that block smart semicolon behavior if they are at eol."
+  :type '(repeat character))
 
 (defcustom smart-semicolon-backspace-commands
   '(backward-delete-char delete-backward-char c-electric-backspace)
-  "List of commands that are treated as backspace command.")
+  "List of commands that are treated as backspace command."
+  :type '(repeat symbol))
 
 (defvar smart-semicolon--last-change nil)
 (defvar smart-semicolon--last-command nil)
