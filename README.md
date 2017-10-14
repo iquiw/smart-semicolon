@@ -3,6 +3,7 @@ Smart Semicolon
 
 [![Build Status](https://travis-ci.org/iquiw/smart-semicolon.svg?branch=master)](https://travis-ci.org/iquiw/smart-semicolon)
 [![Coverage Status](https://coveralls.io/repos/github/iquiw/smart-semicolon/badge.svg?branch=master)](https://coveralls.io/github/iquiw/smart-semicolon?branch=master)
+[![MELPA](https://melpa.org/packages/smart-semicolon-badge.svg)](https://melpa.org/#/smart-semicolon)
 
 About
 -----
@@ -27,6 +28,14 @@ Setup
 * Emacs 25
 
 ### Installation ###
+
+#### MELPA ####
+
+Package install from [MELPA](https://melpa.org).
+
+<kbd>M-x</kbd> `package-install` <kbd>[RET]</kbd> `smart-semicolon` <kbd>[RET]</kbd>
+
+#### GitHub ####
 
 Clone the repository from GitHub.
 
