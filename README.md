@@ -25,7 +25,7 @@ Setup
 
 ### Depends ###
 
-* Emacs 25
+* Emacs 25 or later
 
 ### Installation ###
 
