@@ -1,0 +1,35 @@
+name: Emacs
+
+on:
+  push:
+    branches: [ master ]
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        emacs_version:
+          - 26.3
+          - 27.1
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: purcell/setup-emacs@master
+        with:
+          version: ${{ matrix.emacs_version }}
+      - name: Install cask
+        run: |
+          curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python
+          echo "::add-path::${HOME}/.cask/bin"
+      - name: Install dependencies
+        run: cask
+      - name: Run tests
+        run: |
+          emacs --version
+          cask exec ecukes --no-win -r magnars
