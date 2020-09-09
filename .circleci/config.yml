@@ -1,0 +1,31 @@
+version: 2.1
+
+default: &defaults
+  working_directory: ~/repo
+  steps:
+    - checkout
+    - run: cask
+    - run: cask install
+    - run:
+        name: test
+        command: TERM=vt100 cask exec ecukes -r magnars --no-win
+    - run:
+        name: coverage
+        command: bash <(curl -s https://codecov.io/bash)
+
+jobs:
+  "emacs-26":
+    docker:
+      - image: silex/emacs:26-dev
+    <<: *defaults
+  "emacs-27":
+    docker:
+      - image: silex/emacs:27-dev
+    <<: *defaults
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - "emacs-26"
+      - "emacs-27"
