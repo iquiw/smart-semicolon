@@ -1,8 +1,8 @@
 Smart Semicolon
 ===============
 
-[![Build Status](https://travis-ci.org/iquiw/smart-semicolon.svg?branch=master)](https://travis-ci.org/iquiw/smart-semicolon)
-[![Coverage Status](https://coveralls.io/repos/github/iquiw/smart-semicolon/badge.svg?branch=master)](https://coveralls.io/github/iquiw/smart-semicolon?branch=master)
+[![circleci](https://circleci.com/gh/iquiw/smart-semicolon.svg?style=svg)](https://circleci.com/gh/iquiw/smart-semicolon)
+[![codecov](https://codecov.io/gh/iquiw/smart-semicolon/branch/master/graph/badge.svg)](https://codecov.io/gh/iquiw/smart-semicolon)
 [![MELPA](https://melpa.org/packages/smart-semicolon-badge.svg)](https://melpa.org/#/smart-semicolon)
 
 About
@@ -25,7 +25,7 @@ Setup
 
 ### Depends ###
 
-* Emacs 25
+* Emacs 26
 
 ### Installation ###
 

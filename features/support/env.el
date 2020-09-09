@@ -14,8 +14,9 @@
 ;; Ensure that we don't load old byte-compiled versions
 (let ((load-prefer-newer t))
   (require 'undercover)
-  (undercover "smart-semicolon.el")
-
+  (undercover "smart-semicolon.el"
+              (:report-file "coverage-final.json")
+              (:send-report nil))
   (require 'smart-semicolon)
   (require 'espuds)
   (require 'ert))
