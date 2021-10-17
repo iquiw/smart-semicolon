@@ -16,6 +16,7 @@
   (require 'undercover)
   (undercover "smart-semicolon.el"
               (:report-file "coverage-final.json")
+              (:report-format 'codecov)
               (:send-report nil))
   (require 'smart-semicolon)
   (require 'espuds)
