@@ -11,7 +11,10 @@ default: &defaults
         command: TERM=vt100 cask exec ecukes -r magnars --no-win
     - run:
         name: coverage
-        command: bash <(curl -s https://codecov.io/bash)
+        command: |
+          curl -Os https://uploader.codecov.io/latest/linux/codecov
+          chmod +x codecov
+          ./codecov -t ${CODECOV_TOKEN}
 
 jobs:
   "emacs-26":
